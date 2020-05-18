@@ -12,6 +12,8 @@ using Hangman2020.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Hangman2020.Data.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Hangman2020
 {
@@ -32,7 +34,31 @@ namespace Hangman2020
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddIdentity<User, IdentityRole<string>>()
+            //     .AddRoleManager<RoleManager<IdentityRole<string>>>()
+            //     .AddDefaultUI()
+            //     .AddDefaultTokenProviders()
+            //     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddRazorPages();
+
+            //mozna bude i prihlaseni pres google (:
+
+            //services.AddAuthentication()
+            //.AddGoogle(options =>
+            //{
+            //    IConfigurationSection googleAuthNSection =
+            //        Configuration.GetSection("Authentication:Google");
+
+            //    options.ClientId = googleAuthNSection["ClientId"];
+            //    options.ClientSecret = googleAuthNSection["ClientSecret"];
+            //});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +83,7 @@ namespace Hangman2020
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
