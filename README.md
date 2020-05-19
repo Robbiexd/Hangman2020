@@ -1,5 +1,8 @@
 # Hangman2020
 
+## Postup práce
+* Postup práce je popsán v commitech.
+
 ## DATABÁZE
 
 ### Schema databáze pro hru
