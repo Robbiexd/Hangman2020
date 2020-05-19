@@ -16,7 +16,7 @@ namespace Hangman2020.Data.Models
         [ForeignKey("WordId")]
         public Word Word { get; set; }
 
-        public int UsedId { get; set; }
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
     }

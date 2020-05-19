@@ -31,17 +31,21 @@ namespace Hangman2020.Data
             builder.Entity<Word>().HasData(new Word { Id = 2, Text = "Dependency Injection", CategoryId = 1 });
             builder.Entity<Word>().HasData(new Word { Id = 3, Text = "AddTransient", CategoryId = 1 });
             builder.Entity<Word>().HasData(new Word { Id = 4, Text = "AddSingleton", CategoryId = 1 });
+            builder.Entity<Word>().HasData(new Word { Id = 5, Text = "react", CategoryId = 1 });
 
-            builder.Entity<IdentityRole<string>>().HasData(new IdentityRole<string> { Id = "user1", Name = "Player1", NormalizedName = "PLAYER1" });
+            builder.Entity<Word>().HasData(new Word { Id = 6, Text = "xamarin", CategoryId = 2 });
+            builder.Entity<Word>().HasData(new Word { Id = 7, Text = "c#", CategoryId = 2 });
+
+            //builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "user1", UserId = "user1" });
             var hasher = new PasswordHasher<User>();
 
             builder.Entity<User>().HasData(new User
             {
                 Id = "user1",
-                UserName = "player1",
+                UserName = "player1@pslib.cz",
                 Email = "player1@pslib.cz",
                 NormalizedEmail = "player1@pslib.cz".ToUpper(),
-                NormalizedUserName = "player1".ToUpper(),
+                NormalizedUserName = "player1@pslib.cz".ToUpper(),
                 TwoFactorEnabled = false,
                 EmailConfirmed = true,
                 LockoutEnabled = true,
