@@ -5,5 +5,74 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>GameOn</h1>
+<div class="mw-100">
+    <section id="Game-screen">
 
+        <div class="mw-100">
+            <div class="img">
+                @* TODO menici se obrazek podle počtu zbyvajicich zivotu *@
+                <img src="~/Images/Game/HM-7life.svg" alt="7life" />
+
+            </div>
+        </div>
+        
+
+        <div class="text">
+
+            <h1>SPORT</h1>
+            @* TODO Samotna hra*@
+            <div class="letters">
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+            </div>
+
+            <input type="text" placeholder="Zde napiš písmeno">
+
+            <footer>
+
+                <h2>JIŽ HÁDANÁ PÍSMENA</h2>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+                <a>_</a>
+
+            </footer>
+
+        </div>
+
+    </section>
+</div>
+
+ @section Styles{
+        <link href="@Url.Content("~/css/GameScreen/Gamescreen.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/css/GameScreen/Queries.css")" rel="stylesheet" type="text/css" />
+    }

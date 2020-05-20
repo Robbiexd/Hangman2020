@@ -9,9 +9,13 @@ namespace Hangman2020.Pages
 {
     public class GameOnModel : PageModel
     {
-        public void OnGet()
-        {
+        public int CatId { get; set; }
 
+        public void OnGet(int id)
+        {
+            CatId = id;
         }
+
+        // TODO uložit vse do sessionu 
     }
 }
