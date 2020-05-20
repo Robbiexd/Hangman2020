@@ -4,6 +4,31 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Hangman</h1>
+<div class="mw-100">
+    <section id="open-screen">
+
+        <div class="img">
+
+            <img src="~/Images/Game/HM-complete.svg" alt="Complete HangMan">
+
+        </div>
+
+        <div class="text">
+
+            <h1>HANGMAN</h1>
+
+            <p>Zvládneš přežít <a>5</a> kol, nebo se budeš houpat na šibenici?</p>
+
+            <h2>Máš <a>8</a> životů...</h2>
+
+            <span><a asp-page="SetupScreen">Klikni zde</a></span>
+
+        </div>
+
+    </section>
 </div>
+
+@section Styles{
+    <link href="@Url.Content("~/css/Openscreen/Openscreen.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/Openscreen/Queries.css")" rel="stylesheet" type="text/css" />
+}
