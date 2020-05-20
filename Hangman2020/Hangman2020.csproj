@@ -15,4 +15,22 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Include="wwwroot\css\SetupScreen\Queries.css" />
+    <None Include="wwwroot\css\SetupScreen\Setupscreen.css" />
+    <None Include="wwwroot\Images\Game\Background-forest.jpg" />
+    <None Include="wwwroot\Images\Game\HM-1life.svg" />
+    <None Include="wwwroot\Images\Game\HM-2life.svg" />
+    <None Include="wwwroot\Images\Game\HM-3life.svg" />
+    <None Include="wwwroot\Images\Game\HM-4life.svg" />
+    <None Include="wwwroot\Images\Game\HM-5life.svg" />
+    <None Include="wwwroot\Images\Game\HM-6life.svg" />
+    <None Include="wwwroot\Images\Game\HM-7life.svg" />
+    <None Include="wwwroot\Images\Game\HM-all-loose.svg" />
+    <None Include="wwwroot\Images\Game\HM-all-win.svg" />
+    <None Include="wwwroot\Images\Game\HM-all.svg" />
+    <None Include="wwwroot\Images\Game\HM-complete.svg" />
+  </ItemGroup>
+
 </Project>

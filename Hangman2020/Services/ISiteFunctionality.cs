@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Hangman2020.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hangman2020.Data.Services
+namespace Hangman2020.Services
 {
     public interface ISiteFunctionality
     {
@@ -14,10 +15,16 @@ namespace Hangman2020.Data.Services
         string GetUserId();
 
         /// <summary>
-        /// guid = game id
+        /// string = game id
         /// </summary>
         /// <param name="key"></param>
         /// <param name="id"></param>
         void SaveGame(string key, string id);
+
+        /// <summary>
+        /// Gets List of all categories
+        /// </summary>
+        /// <returns></returns>
+        IList<Category> GetCategories();
     }
 }

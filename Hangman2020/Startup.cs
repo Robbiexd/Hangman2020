@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Hangman2020.Data.Models;
 using Microsoft.AspNetCore.Http;
+using Hangman2020.Services;
 
 namespace Hangman2020
 {
@@ -47,6 +48,8 @@ namespace Hangman2020
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddRazorPages();
+
+            services.AddTransient<ISiteFunctionality, BussinessLogic>();
 
             //mozna bude i prihlaseni pres google (:
 
