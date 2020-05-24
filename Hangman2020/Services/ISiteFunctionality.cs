@@ -22,6 +22,11 @@ namespace Hangman2020.Services
         /// <param name="wordId"></param>
         void SaveGameState(string key, InGame inGame); 
 
+        /// <summary>
+        /// Loads the saved progress from session
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         InGame LoadGameState(string key); 
 
         /// <summary>
@@ -30,6 +35,11 @@ namespace Hangman2020.Services
         /// <returns></returns>
         IList<Category> GetCategories();
 
+        /// <summary>
+        /// Gets the name of a category by Id
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
         string GetCategoryName(int categoryId);
 
         /// <summary>
@@ -45,6 +55,18 @@ namespace Hangman2020.Services
         /// <returns></returns>
         IList<User> GetTopPlayers(); // TODO Get top players
 
+        /// <summary>
+        /// Gets all the game data from session or creates new game data 
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
         InGame GetCurrentGameData(int categoryId);
+
+        /// <summary>
+        /// A method thats executed when a user tries to guess a letter in the word
+        /// </summary>
+        /// <param name="letter"></param>
+        /// <param name="game"></param>
+        void TryToGuessLetter(char letter, InGame game);
     }
 }

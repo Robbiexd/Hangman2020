@@ -10,8 +10,40 @@
 
         <div class="mw-100">
             <div class="img">
-                @* TODO menici se obrazek podle počtu zbyvajicich zivotu *@
-                <img src="~/Images/Game/HM-7life.svg" alt="7life" />
+                @* TODO menici se obrazek podle počtu zbyvajicich zivotu - TriedWords.Count *@
+                @if (Model.GameData.TriedLetters.Count() == 0)
+                {
+                    <img src="~/Images/Game/HM-7life.svg" alt="7life" />
+                }
+                else if (Model.GameData.TriedLetters.Count() == 1)
+                {
+                    <img src="~/Images/Game/HM-6life.svg" alt="6life" />
+                }
+                else if (Model.GameData.TriedLetters.Count() == 2)
+                {
+                    <img src="~/Images/Game/HM-5life.svg" alt="5life" />
+                }
+                else if (Model.GameData.TriedLetters.Count() == 3)
+                {
+                    <img src="~/Images/Game/HM-4life.svg" alt="4life" />
+                }
+                else if (Model.GameData.TriedLetters.Count() == 4)
+                {
+                    <img src="~/Images/Game/HM-3life.svg" alt="3life" />
+                }
+                else if (Model.GameData.TriedLetters.Count() == 5)
+                {
+                    <img src="~/Images/Game/HM-2life.svg" alt="2life" />
+                }
+                else if (Model.GameData.TriedLetters.Count() == 6)
+                {
+                    <img src="~/Images/Game/HM-1life.svg" alt="1life" />
+                }
+                else if (Model.GameData.TriedLetters.Count() == 7)
+                {
+                    <img src="~/Images/Game/HM-complete.svg" alt="0life" />
+                }
+
 
             </div>
         </div>
@@ -22,7 +54,7 @@
             <h1>@Model.CategoryName</h1>
             @* TODO Samotna hra*@
             <div class="letters">
-                @foreach(var item in Model.GameData.WordChars)
+                @foreach (var item in Model.GameData.WordChars)
                 {
                     if (item.Guessed)
                     {
@@ -31,14 +63,19 @@
                     else
                     {
                         <a>_</a>
-                        
+
                     }
                 }
 
 
             </div>
 
-            <input type="text" placeholder="Zde napiš písmeno"> @*TODO -  GAME  functionality*@
+            <form method="post" asp-page-handler="playgame">
+
+                <input type="text" name="letter" value="" />
+                <button class="btn btn-primary">Try to guess</button>
+            </form>
+            @*<a asp-page="GameOn" asp> <input type="text" placeholder="Zde napiš písmeno"> </a>*@ @*TODO -  GAME  functionality*@
 
             <footer>
 
@@ -62,6 +99,9 @@
                         <a>_</a>
                     }
                 }
+                <br />
+                <h2>ZBÝVAJÍCÍ POČET ŽIVOTŮ</h2>
+                <a>@Model.Hearts </a>
 
             </footer>
 

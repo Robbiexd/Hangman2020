@@ -34,10 +34,11 @@ namespace Hangman2020.Services
 
         public string GetRandomWord(int categoryId)
         {
+            // Z databaze vytahne vsechna slova ktera patri k dane kategorii a ulozi je do listu
             IList<Word> words = _db.Words.Where(o => o.CategoryId == categoryId).AsNoTracking().ToList();
             Random random = new Random();
             int randomId = random.Next(0, words.Count() - 1);
-            return words[randomId].Text;
+            return words[randomId].Text; // nasledne vytahne nahodne slovo z tohoto listu
         }
 
         public IList<User> GetTopPlayers()
@@ -76,7 +77,6 @@ namespace Hangman2020.Services
                     CharInWord charInWord = new CharInWord { Guessed = false, Letter = letter };
                     game.WordChars.Add(charInWord);
                 }
-                game.Hearts = 8;
                 SaveGameState("activegame", game);
             }
             return game;
@@ -85,6 +85,25 @@ namespace Hangman2020.Services
         public string GetCategoryName(int categoryId)
         {
             return _db.Categories.Where(o => o.Id == categoryId).AsNoTracking().FirstOrDefault().Name;
+        }
+
+        public void TryToGuessLetter(char letter, InGame game)
+        {
+            bool guessed = false;
+            foreach(CharInWord l in game.WordChars)
+            {
+                if(l.Letter == letter)
+                {
+                    guessed = l.Guessed = true;
+                }
+            }
+
+            if(!guessed)
+            {
+                game.TriedLetters.Add(letter);
+            }
+
+            SaveGameState("activegame", game);
         }
     }
 }
