@@ -1,4 +1,5 @@
 ﻿using Hangman2020.Data.Models;
+using Hangman2020.Data.Models.InGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,9 @@ namespace Hangman2020.Services
         /// </summary>
         /// <param name="key"></param>
         /// <param name="wordId"></param>
-        void SaveWordState(string key, string wordId); // TODO - save word state into session
+        void SaveGameState(string key, InGame inGame); 
+
+        InGame LoadGameState(string key); 
 
         /// <summary>
         /// Gets List of all categories
@@ -27,17 +30,21 @@ namespace Hangman2020.Services
         /// <returns></returns>
         IList<Category> GetCategories();
 
+        string GetCategoryName(int categoryId);
+
         /// <summary>
         /// Gets random word from the category that has not been guessed and splits it into chars
         /// </summary>
         /// <param name="categoryId"></param>
         /// <returns></returns>
-        IList<char> GetRandomWord(int categoryId, int userId); // TODO - get random word method
+        string GetRandomWord(int categoryId); 
 
         /// <summary>
         /// Gets a list of players and their guessed words
         /// </summary>
         /// <returns></returns>
         IList<User> GetTopPlayers(); // TODO Get top players
+
+        InGame GetCurrentGameData(int categoryId);
     }
 }

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hangman2020.Data.Models;
 using Hangman2020.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 namespace Hangman2020.Pages
-{
+{   
+    [Authorize]
     public class SetupScreenModel : PageModel
     {
         private readonly ILogger<SetupScreenModel> _logger;
