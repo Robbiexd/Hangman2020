@@ -115,12 +115,15 @@ namespace Hangman2020.Services
         {
             // pokud je celé slovo uhodlé
             if (CurrentGame.GameProgress == CurrentGame.WordChars.Count())
-            {   
-                
-                User user = _db.ApplicationUsers.Where(u => u.Id == GetUserId()).SingleOrDefault();
-                GuessedWord guessedWord = new GuessedWord { UserId = user.Id, WordId = _db.Words.Where(w => w.Text == CurrentGame.Word).AsNoTracking().SingleOrDefault().Id };
+            {      
+                // uloží se uhodnuté slovo do databaze
+                GuessedWord guessedWord = new GuessedWord { UserId = GetUserId(), WordId = CurrentGame.WordId };
                 _db.GuessedWords.Add(guessedWord);
                 _db.SaveChanges();
+
+                // smaže se postup hry
+                CurrentGame = null;
+                SaveGameState("activegame", CurrentGame);
                 return true;
             }
             return false;
@@ -131,6 +134,9 @@ namespace Hangman2020.Services
             // pokud již uživatel vypotřeboval všechny své pokusy - životy
             if (CurrentGame.TriedLetters.Count() >= 8)
             {
+                // smaže se postup hry
+                CurrentGame = null;
+                SaveGameState("activegame", CurrentGame);
                 return true;
             }
             return false;

@@ -5,5 +5,27 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>GameLost</h1>
+
+<div class="mw-100">
+    <section id="open-screen">
+        <div class="text">
+            <h1>HANGMAN</h1>
+            <p>Byl jsi <a>OBĚŠEN</a></p>
+        </div>
+        <div class="img">
+            <img src="~/Images/Game/HM-all-loose.svg" alt="Loose HangMan">
+        </div>
+        <div class="text">
+            <h1>KONEC HRY</h1>
+            <span><a asp-page="SetupScreen">RESTARTOVAT</a></span>
+        </div>
+    </section>
+</div>
+
+
+@section Styles{
+    <link href="@Url.Content("~/css/Openscreen/Openscreen.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/Openscreen/Queries.css")" rel="stylesheet" type="text/css" />
+}
+
 
