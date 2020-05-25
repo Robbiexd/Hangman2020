@@ -9,5 +9,6 @@ namespace Hangman2020.Data.Models
     public class User : IdentityUser
     {
         public ICollection<GuessedWord> guessedWords { get; set; }
+        public int GuessedWordCount { get; set; }
     }
 }

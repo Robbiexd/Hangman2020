@@ -43,7 +43,8 @@ namespace Hangman2020.Services
 
         public IList<User> GetTopPlayers()
         {
-            throw new NotImplementedException();
+            IList<User> list = _db.ApplicationUsers.OrderByDescending(o => o.GuessedWordCount).AsNoTracking().ToList();
+            return list;
         }
 
         public string GetUserId()
@@ -118,6 +119,10 @@ namespace Hangman2020.Services
             {      
                 // uloží se uhodnuté slovo do databaze
                 GuessedWord guessedWord = new GuessedWord { UserId = GetUserId(), WordId = CurrentGame.Word.Id };
+
+                // pricte 1 k GuessedWordCount právě přihlášeného uživatele
+                _db.ApplicationUsers.Where(o => o.Id == GetUserId()).SingleOrDefault().GuessedWordCount++;
+
                 _db.GuessedWords.Add(guessedWord);
                 _db.SaveChanges();
 
@@ -141,5 +146,6 @@ namespace Hangman2020.Services
             }
             return false;
         }
+
     }
 }

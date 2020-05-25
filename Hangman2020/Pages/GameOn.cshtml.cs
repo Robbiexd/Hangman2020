@@ -15,7 +15,6 @@ namespace Hangman2020.Pages
     public class GameOnModel : PageModel
     {
         private readonly ISiteFunctionality _siteFunctionality;
-        
 
         public InGame GameData { get; set; }
         public string CategoryName { get; set; }

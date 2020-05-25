@@ -34,7 +34,9 @@ namespace Hangman2020.Data
             builder.Entity<Word>().HasData(new Word { Id = 5, Text = "react", CategoryId = 1 });
 
             builder.Entity<Word>().HasData(new Word { Id = 6, Text = "xamarin", CategoryId = 2 });
-            builder.Entity<Word>().HasData(new Word { Id = 7, Text = "c#", CategoryId = 2 });
+            builder.Entity<Word>().HasData(new Word { Id = 7, Text = "python", CategoryId = 2 });
+            builder.Entity<Word>().HasData(new Word { Id = 8, Text = "algoritmy", CategoryId = 2 });
+            builder.Entity<Word>().HasData(new Word { Id = 9, Text = "Java", CategoryId = 2 });
 
             builder.Entity<GuessedWord>().HasKey(k => new { k.WordId, k.UserId });
             //builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "user1", UserId = "user1" });
@@ -52,7 +54,40 @@ namespace Hangman2020.Data
                 LockoutEnabled = true,
                 PhoneNumberConfirmed = false,
                 PasswordHash = hasher.HashPassword(null, "hangmyself123."),
-                SecurityStamp = string.Empty
+                SecurityStamp = string.Empty,
+                GuessedWordCount = 0
+            }) ;
+
+            builder.Entity<User>().HasData(new User
+            {
+                Id = "user2",
+                UserName = "player2@pslib.cz",
+                Email = "player2@pslib.cz",
+                NormalizedEmail = "player2@pslib.cz".ToUpper(),
+                NormalizedUserName = "player2@pslib.cz".ToUpper(),
+                TwoFactorEnabled = false,
+                EmailConfirmed = true,
+                LockoutEnabled = true,
+                PhoneNumberConfirmed = false,
+                PasswordHash = hasher.HashPassword(null, "hangmyself123."),
+                SecurityStamp = string.Empty,
+                GuessedWordCount = 0
+            });
+
+            builder.Entity<User>().HasData(new User
+            {
+                Id = "user3",
+                UserName = "player3@pslib.cz",
+                Email = "player3@pslib.cz",
+                NormalizedEmail = "player3@pslib.cz".ToUpper(),
+                NormalizedUserName = "player3@pslib.cz".ToUpper(),
+                TwoFactorEnabled = false,
+                EmailConfirmed = true,
+                LockoutEnabled = true,
+                PhoneNumberConfirmed = false,
+                PasswordHash = hasher.HashPassword(null, "hangmyself123."),
+                SecurityStamp = string.Empty,
+                GuessedWordCount = 0
             });
         }
     }
