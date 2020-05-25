@@ -119,7 +119,7 @@ namespace Hangman2020.Services
                 
                 User user = _db.ApplicationUsers.Where(u => u.Id == GetUserId()).SingleOrDefault();
                 GuessedWord guessedWord = new GuessedWord { UserId = user.Id, WordId = _db.Words.Where(w => w.Text == CurrentGame.Word).AsNoTracking().SingleOrDefault().Id };
-                user.guessedWords.Add(guessedWord);
+                _db.GuessedWords.Add(guessedWord);
                 _db.SaveChanges();
                 return true;
             }
