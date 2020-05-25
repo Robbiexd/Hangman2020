@@ -9,8 +9,6 @@ namespace Hangman2020.Data.Models
 {
     public class GuessedWord
     {
-        [Key]
-        public int Id { get; set; }
         public int WordId { get; set; }
 
         [ForeignKey("WordId")]

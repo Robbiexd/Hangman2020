@@ -14,9 +14,7 @@ namespace Hangman2020.Data.Models.InGame
 
         public List<string> TriedLetters { get; set; } = new List<string>();
 
-        public int WordId { get; set; }
-
-        public string Word { get; set; }
+        public Word Word { get; set; }
 
         public string CategoryName { get; set; }
 

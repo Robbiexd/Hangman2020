@@ -43,13 +43,6 @@ namespace Hangman2020.Services
         string GetCategoryName(int categoryId);
 
         /// <summary>
-        /// Gets random word from the category that has not been guessed and splits it into chars
-        /// </summary>
-        /// <param name="categoryId"></param>
-        /// <returns></returns>
-        string GetRandomWord(int categoryId); 
-
-        /// <summary>
         /// Gets a list of players and their guessed words
         /// </summary>
         /// <returns></returns>

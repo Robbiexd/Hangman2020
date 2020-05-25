@@ -32,13 +32,13 @@ namespace Hangman2020.Services
             return list;
         }
 
-        public string GetRandomWord(int categoryId)
+        private Word GetRandomWord(int categoryId)
         {
             // Z databaze vytahne vsechna slova ktera patri k dane kategorii a ulozi je do listu
             IList<Word> words = _db.Words.Where(o => o.CategoryId == categoryId).AsNoTracking().ToList();
             Random random = new Random();
             int randomId = random.Next(0, words.Count() - 1);
-            return words[randomId].Text; // nasledne vytahne nahodne slovo z tohoto listu
+            return words[randomId]; // nasledne vytahne nahodne slovo z tohoto listu
         }
 
         public IList<User> GetTopPlayers()
@@ -72,7 +72,7 @@ namespace Hangman2020.Services
                 game.Word = GetRandomWord(categoryId); // vytahne random slovo z database podle zvoleneho tematu
 
                 // pro kazde pismeno v hadanem slove priradi toto pismenko do property Letter v modelu CharInWord nastavi jeho stav Guessed = false
-                foreach(var letter in game.Word)
+                foreach(var letter in game.Word.Text)
                 {
                     CharInWord charInWord = new CharInWord { Guessed = false, Letter = letter };
                     game.WordChars.Add(charInWord);
@@ -117,7 +117,7 @@ namespace Hangman2020.Services
             if (CurrentGame.GameProgress == CurrentGame.WordChars.Count())
             {      
                 // uloží se uhodnuté slovo do databaze
-                GuessedWord guessedWord = new GuessedWord { UserId = GetUserId(), WordId = CurrentGame.WordId };
+                GuessedWord guessedWord = new GuessedWord { UserId = GetUserId(), WordId = CurrentGame.Word.Id };
                 _db.GuessedWords.Add(guessedWord);
                 _db.SaveChanges();
 
