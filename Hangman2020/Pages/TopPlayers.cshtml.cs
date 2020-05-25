@@ -13,15 +13,15 @@ namespace Hangman2020.Pages
     {
         private readonly ISiteFunctionality _siteFunctionality;
 
-        public List<User> users { get; set; }
+        public IList<User> TopPlayers { get; set; }
 
-        public TopPlayersModel()
+        public TopPlayersModel(ISiteFunctionality siteFunctionality)
         {
-
+            _siteFunctionality = siteFunctionality;
         }
         public void OnGet()
         {
-
+            TopPlayers = _siteFunctionality.GetTopPlayers();
         }
     }
 }

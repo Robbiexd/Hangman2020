@@ -3,7 +3,53 @@
 @{
     ViewData["Title"] = "TopPlayers";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+    int i = 0;
 }
 
 <h1>TopPlayers</h1>
+
+<div class="row">
+    <div class="col">
+        @if (Model.TopPlayers.Count() >= 1 || Model.TopPlayers is null)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Position in Ladder</th>
+                        <th>Name</th>
+                        <th>Total Guessed Words</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.TopPlayers)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i.</td>
+                            <td>@item.UserName</td>
+                            <td>@item.GuessedWordCount</td>
+                            
+                        </tr>
+                    }
+
+                </tbody>
+
+
+            </table>
+        }
+        else
+        {
+
+            <p> There are no registered players!</p>
+
+
+        }
+    </div>
+</div>
+
+@section Styles{
+    <link href="@Url.Content("~/css/GameScreen/Gamescreen.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/GameScreen/Queries.css")" rel="stylesheet" type="text/css" />
+}
 
