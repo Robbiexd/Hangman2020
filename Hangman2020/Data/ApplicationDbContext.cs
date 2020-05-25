@@ -36,6 +36,7 @@ namespace Hangman2020.Data
             builder.Entity<Word>().HasData(new Word { Id = 6, Text = "xamarin", CategoryId = 2 });
             builder.Entity<Word>().HasData(new Word { Id = 7, Text = "c#", CategoryId = 2 });
 
+            builder.Entity<GuessedWord>().HasKey(k => new { k.WordId, k.UserId });
             //builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "user1", UserId = "user1" });
             var hasher = new PasswordHasher<User>();
 
