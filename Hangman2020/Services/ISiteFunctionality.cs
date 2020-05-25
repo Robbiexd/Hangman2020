@@ -67,6 +67,7 @@ namespace Hangman2020.Services
         /// </summary>
         /// <param name="letter"></param>
         /// <param name="game"></param>
-        void TryToGuessLetter(char letter, InGame game);
+        void TryToGuessLetter(string letter);
+        
     }
 }

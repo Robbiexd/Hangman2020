@@ -65,7 +65,7 @@ namespace Hangman2020.Services
 
         public InGame GetCurrentGameData(int categoryId)
         {
-            var game = LoadGameState("activegame");
+            var game = CurrentGame;
             // pokud neni zadna hra aktivni v session, vytvori se nova
             if(game.Word is null)
             {
@@ -77,6 +77,8 @@ namespace Hangman2020.Services
                     CharInWord charInWord = new CharInWord { Guessed = false, Letter = letter };
                     game.WordChars.Add(charInWord);
                 }
+                game.CategoryName = GetCategoryName(categoryId);
+                game.GameProgress = 0;
                 SaveGameState("activegame", game);
             }
             return game;
@@ -87,23 +89,34 @@ namespace Hangman2020.Services
             return _db.Categories.Where(o => o.Id == categoryId).AsNoTracking().FirstOrDefault().Name;
         }
 
-        public void TryToGuessLetter(char letter, InGame game)
+        public void TryToGuessLetter(string letter)
         {
-            bool guessed = false;
-            foreach(CharInWord l in game.WordChars)
+            bool letterGuessed = false;
+            foreach(CharInWord l in CurrentGame.WordChars)
             {
-                if(l.Letter == letter)
+                if(l.Letter.ToString() == letter)
                 {
-                    guessed = l.Guessed = true;
+                    letterGuessed = l.Guessed = true;
+                    CurrentGame.GameProgress++;
                 }
             }
 
-            if(!guessed)
+            if(!letterGuessed)
             {
-                game.TriedLetters.Add(letter);
+                CurrentGame.TriedLetters.Add(letter);
             }
 
-            SaveGameState("activegame", game);
+            // pokud je slovo uhodlý 
+            if (CurrentGame.GameProgress == CurrentGame.WordChars.Count())
+            {
+                // TODO - GAME END - SUCCESS
+            }
+
+            // TODO - GAME END - FAILURE
+
+            SaveGameState("activegame", CurrentGame);
         }
+
+      
     }
 }

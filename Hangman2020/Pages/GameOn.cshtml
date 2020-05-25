@@ -47,7 +47,7 @@
 
             </div>
         </div>
-        
+
 
         <div class="text">
 
@@ -83,21 +83,19 @@
 
                 @for (int i = 0; i < 8; i++)
                 {
-                    if (Model.GameData.TriedLetters.Count() > 0)
+
+
+                    if (Model.GameData.TriedLetters.ElementAtOrDefault(i) != null )
                     {
-                        if ((Model.GameData.TriedLetters[i] < Model.GameData.TriedLetters.Count() - 1))
-                        {
-                            <a>@Model.GameData.TriedLetters[i]</a>
-                        }
-                        else
-                        {
-                            <a>_</a>
-                        }
+                        <a>@Model.GameData.TriedLetters[i]</a>
                     }
                     else
                     {
                         <a>_</a>
                     }
+
+
+
                 }
                 <br />
                 <h2>ZBÝVAJÍCÍ POČET ŽIVOTŮ</h2>
@@ -110,7 +108,7 @@
     </section>
 </div>
 
- @section Styles{
-        <link href="@Url.Content("~/css/GameScreen/Gamescreen.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/css/GameScreen/Queries.css")" rel="stylesheet" type="text/css" />
-    }
+@section Styles{
+    <link href="@Url.Content("~/css/GameScreen/Gamescreen.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/GameScreen/Queries.css")" rel="stylesheet" type="text/css" />
+}

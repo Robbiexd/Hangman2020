@@ -33,13 +33,13 @@ namespace Hangman2020.Pages
         public void OnGet(int id)
         {
             GameData = _siteFunctionality.GetCurrentGameData(id);
-            CategoryName = _siteFunctionality.GetCategoryName(id);
-            Hearts = Hearts - GameData.TriedLetters.Count();
+            CategoryName = GameData.CategoryName;
+            Hearts -= GameData.TriedLetters.Count();
         }
 
-        public IActionResult OnPostPlayGame(char letter)
+        public IActionResult OnPostPlayGame(string letter)
         {
-            _siteFunctionality.TryToGuessLetter(letter, GameData);
+            _siteFunctionality.TryToGuessLetter(letter);
             return RedirectToPage("GameOn");
         }
 
