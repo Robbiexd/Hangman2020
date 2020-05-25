@@ -68,6 +68,17 @@ namespace Hangman2020.Services
         /// <param name="letter"></param>
         /// <param name="game"></param>
         void TryToGuessLetter(string letter);
-        
+
+        /// <summary>
+        /// if games won returns true
+        /// </summary>
+        /// <returns></returns>
+        bool GamesWon();
+
+        /// <summary>
+        /// If games lost returns true
+        /// </summary>
+        /// <returns></returns>
+        bool GamesLost();
     }
 }

@@ -8,6 +8,6 @@ namespace Hangman2020.Data.Models
 {
     public class User : IdentityUser
     {
-        ICollection<GuessedWord> guessedWords { get; set; }
+        public ICollection<GuessedWord> guessedWords { get; set; }
     }
 }

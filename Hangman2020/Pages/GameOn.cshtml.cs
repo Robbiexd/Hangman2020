@@ -40,6 +40,14 @@ namespace Hangman2020.Pages
         public IActionResult OnPostPlayGame(string letter)
         {
             _siteFunctionality.TryToGuessLetter(letter);
+            if(_siteFunctionality.GamesWon())
+            {
+                return RedirectToPage("GameWon");
+            }
+            else if(_siteFunctionality.GamesLost())
+            {
+                return RedirectToPage("GameLost");
+            }
             return RedirectToPage("GameOn");
         }
 

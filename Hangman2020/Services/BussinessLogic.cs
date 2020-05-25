@@ -94,6 +94,7 @@ namespace Hangman2020.Services
             bool letterGuessed = false;
             foreach(CharInWord l in CurrentGame.WordChars)
             {
+                // pokud se písmeno uhodlo
                 if(l.Letter.ToString() == letter)
                 {
                     letterGuessed = l.Guessed = true;
@@ -101,22 +102,38 @@ namespace Hangman2020.Services
                 }
             }
 
+            // pokud se písmeno neuhodlo
             if(!letterGuessed)
             {
                 CurrentGame.TriedLetters.Add(letter);
             }
 
-            // pokud je slovo uhodlý 
-            if (CurrentGame.GameProgress == CurrentGame.WordChars.Count())
-            {
-                // TODO - GAME END - SUCCESS
-            }
-
-            // TODO - GAME END - FAILURE
-
             SaveGameState("activegame", CurrentGame);
         }
 
-      
+        public bool GamesWon()
+        {
+            // pokud je celé slovo uhodlé
+            if (CurrentGame.GameProgress == CurrentGame.WordChars.Count())
+            {   
+                
+                User user = _db.ApplicationUsers.Where(u => u.Id == GetUserId()).SingleOrDefault();
+                GuessedWord guessedWord = new GuessedWord { UserId = user.Id, WordId = _db.Words.Where(w => w.Text == CurrentGame.Word).AsNoTracking().SingleOrDefault().Id };
+                user.guessedWords.Add(guessedWord);
+                _db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool GamesLost()
+        {
+            // pokud již uživatel vypotřeboval všechny své pokusy - životy
+            if (CurrentGame.TriedLetters.Count() >= 8)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
