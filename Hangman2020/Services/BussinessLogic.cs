@@ -93,10 +93,11 @@ namespace Hangman2020.Services
         public void TryToGuessLetter(string letter)
         {
             bool letterGuessed = false;
+
             foreach(CharInWord l in CurrentGame.WordChars)
             {
-                // pokud se písmeno uhodlo
-                if(l.Letter.ToString() == letter)
+                // pokud se písmeno uhodlo (jedno jestli je malé nebo velké)
+                if(l.Letter.ToString() == letter || l.Letter.ToString().ToUpper() == letter || l.Letter.ToString().ToLower() == letter)
                 {
                     letterGuessed = l.Guessed = true;
                     CurrentGame.GameProgress++;

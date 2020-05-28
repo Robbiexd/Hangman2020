@@ -28,7 +28,7 @@ namespace Hangman2020.Data
             builder.Entity<Category>().HasData(new Category { Id = 2, Name = "prg" });
 
             builder.Entity<Word>().HasData(new Word { Id = 1, Text = "Doména", CategoryId = 1 });
-            builder.Entity<Word>().HasData(new Word { Id = 2, Text = "Dependency Injection", CategoryId = 1 });
+            builder.Entity<Word>().HasData(new Word { Id = 2, Text = "DependencyInjection", CategoryId = 1 });
             builder.Entity<Word>().HasData(new Word { Id = 3, Text = "AddTransient", CategoryId = 1 });
             builder.Entity<Word>().HasData(new Word { Id = 4, Text = "AddSingleton", CategoryId = 1 });
             builder.Entity<Word>().HasData(new Word { Id = 5, Text = "react", CategoryId = 1 });
