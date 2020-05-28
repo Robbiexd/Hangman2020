@@ -50,6 +50,12 @@ namespace Hangman2020.Pages
             return RedirectToPage("GameOn");
         }
 
+        public IActionResult OnPostSurrender()
+        {
+            _siteFunctionality.RestartGame();
+            return RedirectToPage("SetupScreen");
+        }
+
 
     }
 }

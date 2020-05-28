@@ -46,7 +46,7 @@ namespace Hangman2020.Services
         /// Gets a list of players and their guessed words
         /// </summary>
         /// <returns></returns>
-        IList<User> GetTopPlayers(); // TODO Get top players
+        IList<User> GetTopPlayers(); 
 
         /// <summary>
         /// Gets all the game data from session or creates new game data 
@@ -73,5 +73,10 @@ namespace Hangman2020.Services
         /// </summary>
         /// <returns></returns>
         bool GamesLost();
+
+        /// <summary>
+        /// Clears cookies so user can get a new game
+        /// </summary>
+        void RestartGame();
     }
 }

@@ -23,7 +23,7 @@
 
             @foreach(var item in Model.Categories)
             {
-                <span><a asp-page="GameOn" asp-route-id="@item.Id">@item.Name</a></span>
+                <span><a asp-page="GameOn" asp-route-id="@item.Id" class="buttonText">@item.Name</a></span>
             }
 
         </div>

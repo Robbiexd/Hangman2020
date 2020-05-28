@@ -17,7 +17,9 @@ namespace Hangman2020.Services
         private readonly ApplicationDbContext _db;
         private readonly ISession _session;
         private readonly IHttpContextAccessor _hca;
+
         public InGame CurrentGame { get; private set; }
+
         public BussinessLogic(ApplicationDbContext db, IHttpContextAccessor hca)
         {
             _db = db;
@@ -126,10 +128,9 @@ namespace Hangman2020.Services
 
                 _db.GuessedWords.Add(guessedWord);
                 _db.SaveChanges();
+             
+                RestartGame();
 
-                // smaže se postup hry
-                CurrentGame = null;
-                SaveGameState("activegame", CurrentGame);
                 return true;
             }
             return false;
@@ -140,13 +141,18 @@ namespace Hangman2020.Services
             // pokud již uživatel vypotřeboval všechny své pokusy - životy
             if (CurrentGame.TriedLetters.Count() >= 8)
             {
-                // smaže se postup hry
-                CurrentGame = null;
-                SaveGameState("activegame", CurrentGame);
+
+                RestartGame();
                 return true;
             }
             return false;
         }
 
+        // smaže se postup hry a uloží do session
+        public void RestartGame()
+        {
+            CurrentGame = null;
+            SaveGameState("activegame", CurrentGame);
+        }
     }
 }

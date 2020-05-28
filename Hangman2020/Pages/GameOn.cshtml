@@ -10,7 +10,6 @@
 
         <div class="mw-100">
             <div class="img">
-                @* TODO menici se obrazek podle počtu zbyvajicich zivotu - TriedWords.Count *@
                 @if (Model.GameData.TriedLetters.Count() == 0)
                 {
                     <img src="~/Images/Game/HM-7life.svg" alt="7life" />
@@ -52,7 +51,6 @@
         <div class="text">
 
             <h1>@Model.CategoryName</h1>
-            @* TODO Samotna hra*@
             <div class="letters">
                 @foreach (var item in Model.GameData.WordChars)
                 {
@@ -73,9 +71,8 @@
             <form method="post" asp-page-handler="playgame">
 
                 <input type="text" name="letter" value="" />
-                <button class="btn btn-primary">Try to guess</button>
+                <button class="buttonText">Zkusit uhodnout</button>
             </form>
-            @*<a asp-page="GameOn" asp> <input type="text" placeholder="Zde napiš písmeno"> </a>*@ @*TODO -  GAME  functionality*@
 
             <footer>
 
@@ -83,9 +80,7 @@
 
                 @for (int i = 0; i < 8; i++)
                 {
-
-
-                    if (Model.GameData.TriedLetters.ElementAtOrDefault(i) != null )
+                    if (Model.GameData.TriedLetters.ElementAtOrDefault(i) != null)
                     {
                         <a>@Model.GameData.TriedLetters[i]</a>
                     }
@@ -94,13 +89,14 @@
                         <a>_</a>
                     }
 
-
-
                 }
                 <br />
                 <h2>ZBÝVAJÍCÍ POČET ŽIVOTŮ</h2>
                 <a>@Model.Hearts </a>
 
+                <form method="post" asp-page-handler="surrender">
+                    <button class="buttonText">Vzdát</button>
+                </form>
             </footer>
 
         </div>

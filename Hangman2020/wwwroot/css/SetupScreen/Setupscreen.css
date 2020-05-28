@@ -56,4 +56,10 @@ body{
     color: #760e08; 
 }
 
+.buttonText {
+    font-size: 25pt;
+    color: #760e08;
+    transition: 1s;
+}
+
 

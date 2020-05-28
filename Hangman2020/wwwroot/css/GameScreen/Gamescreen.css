@@ -92,3 +92,9 @@ body{
     border-color: #760e08;
     box-shadow: 0 0 8px 0 #760e08;
 }
+
+.buttonText {
+    font-size: 25pt;
+    color: #760e08;
+    transition: 1s;
+}
