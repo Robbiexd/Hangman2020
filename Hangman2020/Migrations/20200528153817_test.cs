@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Hangman2020.Data.Migrations
+namespace Hangman2020.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +39,9 @@ namespace Hangman2020.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    GuessedWordCount = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -48,11 +49,24 @@ namespace Hangman2020.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +87,7 @@ namespace Hangman2020.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -153,6 +167,85 @@ namespace Hangman2020.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Words",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Text = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Words", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Words_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GuessedWords",
+                columns: table => new
+                {
+                    WordId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GuessedWords", x => new { x.WordId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_GuessedWords_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GuessedWords_Words_WordId",
+                        column: x => x.WordId,
+                        principalTable: "Words",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "GuessedWordCount" },
+                values: new object[,]
+                {
+                    { "user1", 0, "fc88a440-d3fa-4bec-8306-8eb98089da92", "User", "player1@pslib.cz", true, true, null, "PLAYER1@PSLIB.CZ", "PLAYER1@PSLIB.CZ", "AQAAAAEAACcQAAAAEG2mJ8SfG7DbcPmodjT0uExxPnyIKXrwFXvdxbcrTZTpZfIRSBwyUir4iK8fFkOIwg==", null, false, "", false, "player1@pslib.cz", 0 },
+                    { "user2", 0, "3dbeb2f4-49bd-4e1b-bd42-d5ea1d494ec3", "User", "player2@pslib.cz", true, true, null, "PLAYER2@PSLIB.CZ", "PLAYER2@PSLIB.CZ", "AQAAAAEAACcQAAAAECpOSmgMUiUHp/V+RWorI4FDuFINNzpILJsYQKDSrkJFmf+LAu8zfX5scUjKHek3gQ==", null, false, "", false, "player2@pslib.cz", 0 },
+                    { "user3", 0, "0f6662a8-0976-4fdb-9c04-67f76a97863f", "User", "player3@pslib.cz", true, true, null, "PLAYER3@PSLIB.CZ", "PLAYER3@PSLIB.CZ", "AQAAAAEAACcQAAAAEDhjNmoDW4wwPRzplOpHeHa65fY4F+p0Qk3lBEOaq/YXqjqjXZnPbGYPpEkzP7hASg==", null, false, "", false, "player3@pslib.cz", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "weby" },
+                    { 2, "prg" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Words",
+                columns: new[] { "Id", "CategoryId", "Text" },
+                values: new object[,]
+                {
+                    { 1, 1, "Doména" },
+                    { 2, 1, "Dependency Injection" },
+                    { 3, 1, "AddTransient" },
+                    { 4, 1, "AddSingleton" },
+                    { 5, 1, "react" },
+                    { 6, 2, "xamarin" },
+                    { 7, 2, "python" },
+                    { 8, 2, "algoritmy" },
+                    { 9, 2, "Java" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +284,16 @@ namespace Hangman2020.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GuessedWords_UserId",
+                table: "GuessedWords",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Words_CategoryId",
+                table: "Words",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,10 +314,19 @@ namespace Hangman2020.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "GuessedWords");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Words");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

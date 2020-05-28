@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Hangman2020.Data.Migrations
+namespace Hangman2020.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200519144644_test2")]
-    partial class test2
+    [Migration("20200528153817_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,22 +50,15 @@ namespace Hangman2020.Data.Migrations
 
             modelBuilder.Entity("Hangman2020.Data.Models.GuessedWord", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("WordId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("WordId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("WordId", "UserId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("WordId");
 
                     b.ToTable("GuessedWords");
                 });
@@ -130,7 +123,19 @@ namespace Hangman2020.Data.Migrations
                         {
                             Id = 7,
                             CategoryId = 2,
-                            Text = "c#"
+                            Text = "python"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 2,
+                            Text = "algoritmy"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 2,
+                            Text = "Java"
                         });
                 });
 
@@ -344,6 +349,9 @@ namespace Hangman2020.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<int>("GuessedWordCount")
+                        .HasColumnType("int");
+
                     b.HasDiscriminator().HasValue("User");
 
                     b.HasData(
@@ -351,25 +359,62 @@ namespace Hangman2020.Data.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e8d19e01-dcfd-4d10-b05b-e0498036bab6",
+                            ConcurrencyStamp = "fc88a440-d3fa-4bec-8306-8eb98089da92",
                             Email = "player1@pslib.cz",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "PLAYER1@PSLIB.CZ",
                             NormalizedUserName = "PLAYER1@PSLIB.CZ",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOqUqaC3ZbsIepHIycY5aBcmAt5ihJN19ZpJ/MtOwT+AVTfkQRHdMxMP970icdmifQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG2mJ8SfG7DbcPmodjT0uExxPnyIKXrwFXvdxbcrTZTpZfIRSBwyUir4iK8fFkOIwg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "player1@pslib.cz"
+                            UserName = "player1@pslib.cz",
+                            GuessedWordCount = 0
+                        },
+                        new
+                        {
+                            Id = "user2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3dbeb2f4-49bd-4e1b-bd42-d5ea1d494ec3",
+                            Email = "player2@pslib.cz",
+                            EmailConfirmed = true,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "PLAYER2@PSLIB.CZ",
+                            NormalizedUserName = "PLAYER2@PSLIB.CZ",
+                            PasswordHash = "AQAAAAEAACcQAAAAECpOSmgMUiUHp/V+RWorI4FDuFINNzpILJsYQKDSrkJFmf+LAu8zfX5scUjKHek3gQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "player2@pslib.cz",
+                            GuessedWordCount = 0
+                        },
+                        new
+                        {
+                            Id = "user3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0f6662a8-0976-4fdb-9c04-67f76a97863f",
+                            Email = "player3@pslib.cz",
+                            EmailConfirmed = true,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "PLAYER3@PSLIB.CZ",
+                            NormalizedUserName = "PLAYER3@PSLIB.CZ",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDhjNmoDW4wwPRzplOpHeHa65fY4F+p0Qk3lBEOaq/YXqjqjXZnPbGYPpEkzP7hASg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "player3@pslib.cz",
+                            GuessedWordCount = 0
                         });
                 });
 
             modelBuilder.Entity("Hangman2020.Data.Models.GuessedWord", b =>
                 {
                     b.HasOne("Hangman2020.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("guessedWords")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Hangman2020.Data.Models.Word", "Word")
                         .WithMany()
