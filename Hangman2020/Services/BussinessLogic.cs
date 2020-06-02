@@ -141,7 +141,6 @@ namespace Hangman2020.Services
             // pokud již uživatel vypotřeboval všechny své pokusy - životy
             if (CurrentGame.TriedLetters.Count() >= 8)
             {
-
                 RestartGame();
                 return true;
             }
