@@ -10,6 +10,7 @@ namespace Hangman2020.Data.Models.InGame
     /// </summary>
     public class InGame
     {
+
         public List<CharInWord> WordChars { get; set; } = new List<CharInWord>();
 
         public List<string> TriedLetters { get; set; } = new List<string>();
@@ -19,6 +20,8 @@ namespace Hangman2020.Data.Models.InGame
         public string CategoryName { get; set; }
 
         public int GameProgress { get; set; }
+
+        public string UserId { get; set; }
 
     }
 }

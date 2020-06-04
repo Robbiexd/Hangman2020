@@ -78,5 +78,11 @@ namespace Hangman2020.Services
         /// Clears cookies so user can get a new game
         /// </summary>
         void RestartGame();
+
+        /// <summary>
+        /// Converts already tried letters to hearts
+        /// </summary>
+        /// <returns></returns>
+        int GetHearts();
     }
 }

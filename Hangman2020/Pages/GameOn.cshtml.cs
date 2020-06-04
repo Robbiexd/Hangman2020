@@ -19,9 +19,11 @@ namespace Hangman2020.Pages
         public InGame GameData { get; set; }
         public string CategoryName { get; set; }
 
+        // TODO
         public string ImagePath { get; set; }
 
-        public int Hearts { get; set; } = 8;
+        public int Hearts { get; set; }
+
 
 
         public GameOnModel(ISiteFunctionality siteFunctionality)
@@ -33,7 +35,8 @@ namespace Hangman2020.Pages
         {
             GameData = _siteFunctionality.GetCurrentGameData(id);
             CategoryName = GameData.CategoryName;
-            Hearts -= GameData.TriedLetters.Count();
+            Hearts = _siteFunctionality.GetHearts();
+
         }
 
         public IActionResult OnPostPlayGame(string letter)

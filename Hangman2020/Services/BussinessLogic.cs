@@ -17,6 +17,7 @@ namespace Hangman2020.Services
         private readonly ApplicationDbContext _db;
         private readonly ISession _session;
         private readonly IHttpContextAccessor _hca;
+        private const int MaxHearts = 8;
 
         public InGame CurrentGame { get; private set; }
 
@@ -25,7 +26,7 @@ namespace Hangman2020.Services
             _db = db;
             _session = hca.HttpContext.Session;
             _hca = hca;
-            CurrentGame = LoadGameState("activegame");
+            CurrentGame = LoadGameState(GetUserId());
         }
 
         public IList<Category> GetCategories()
@@ -36,11 +37,11 @@ namespace Hangman2020.Services
 
         private Word GetRandomWord(int categoryId)
         {
-            // Z databaze vytahne vsechna slova ktera patri k dane kategorii a ulozi je do listu
-            IList<Word> words = _db.Words.Where(o => o.CategoryId == categoryId).AsNoTracking().ToList();
+
             Random random = new Random();
-            int randomId = random.Next(0, words.Count() - 1);
-            return words[randomId]; // nasledne vytahne nahodne slovo z tohoto listu
+
+            int toSkip = random.Next(1, _db.Words.Count());
+            return _db.Words.OrderBy(o => o.Id).Skip(toSkip).Take(1).AsNoTracking().FirstOrDefault(); // nasledne vytahne nahodne slovo z tohoto listu
         }
 
         public IList<User> GetTopPlayers()
@@ -69,11 +70,12 @@ namespace Hangman2020.Services
         public InGame GetCurrentGameData(int categoryId)
         {
             var game = CurrentGame;
+
             // pokud neni zadna hra aktivni v session, vytvori se nova
-            if(game.Word is null)
+            if(game.UserId != GetUserId())
             {
                 game.Word = GetRandomWord(categoryId); // vytahne random slovo z database podle zvoleneho tematu
-
+                game.UserId = GetUserId();
                 // pro kazde pismeno v hadanem slove priradi toto pismenko do property Letter v modelu CharInWord nastavi jeho stav Guessed = false
                 foreach(var letter in game.Word.Text)
                 {
@@ -82,7 +84,7 @@ namespace Hangman2020.Services
                 }
                 game.CategoryName = GetCategoryName(categoryId);
                 game.GameProgress = 0;
-                SaveGameState("activegame", game);
+                SaveGameState(GetUserId(), game);
             }
             return game;
         }
@@ -99,10 +101,16 @@ namespace Hangman2020.Services
             foreach(CharInWord l in CurrentGame.WordChars)
             {
                 // pokud se písmeno uhodlo (jedno jestli je malé nebo velké)
-                if(l.Letter.ToString() == letter || l.Letter.ToString().ToUpper() == letter || l.Letter.ToString().ToLower() == letter)
+                if(l.Letter.ToString().ToUpper() == letter || l.Letter.ToString().ToLower() == letter)
                 {
+                    // pokud již je však uhodlé, progress zustane stejný
+                    // oprava gamebreaking glitche :(
+                    if(!l.Guessed)
+                    {
+                        CurrentGame.GameProgress++;
+                    }
                     letterGuessed = l.Guessed = true;
-                    CurrentGame.GameProgress++;
+                    
                 }
             }
 
@@ -112,7 +120,7 @@ namespace Hangman2020.Services
                 CurrentGame.TriedLetters.Add(letter);
             }
 
-            SaveGameState("activegame", CurrentGame);
+            SaveGameState(GetUserId(), CurrentGame);
         }
 
         public bool GamesWon()
@@ -151,7 +159,12 @@ namespace Hangman2020.Services
         public void RestartGame()
         {
             CurrentGame = null;
-            SaveGameState("activegame", CurrentGame);
+            SaveGameState(GetUserId(), CurrentGame);
+        }
+
+        public int GetHearts()
+        {
+            return MaxHearts - CurrentGame.TriedLetters.Count();
         }
     }
 }
