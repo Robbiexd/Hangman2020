@@ -37,11 +37,26 @@ namespace Hangman2020.Services
 
         private Word GetRandomWord(int categoryId)
         {
-
+            Word randomWord = new Word();
+            bool isNew = false;
             Random random = new Random();
 
             int toSkip = random.Next(1, _db.Words.Count());
-            return _db.Words.OrderBy(o => o.Id).Skip(toSkip).Take(1).AsNoTracking().FirstOrDefault(); // nasledne vytahne nahodne slovo z tohoto listu
+            var guessedWords = _db.GuessedWords.Where(o => o.UserId == GetUserId()).AsNoTracking().ToList();
+            while(!isNew)
+            {
+              var word =  _db.Words.OrderBy(o => o.Id).Skip(toSkip).Take(1).AsNoTracking().FirstOrDefault(); //  vytahne nahodne slovo z databaz
+                foreach(var item in guessedWords)
+                {
+                    if(item.WordId != word.Id) // zkontroluje jestli user už toto slovo uhodl
+                    {
+                        randomWord = word;
+                        isNew = true;
+                    }
+                }
+            }
+            
+            return randomWord;
         }
 
         public IList<User> GetTopPlayers()

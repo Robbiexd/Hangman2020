@@ -12,7 +12,6 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(Img/Background-forest.jpg);
     display: grid;
     grid-template-columns: auto;
 }
